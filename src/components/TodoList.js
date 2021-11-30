@@ -1,36 +1,50 @@
-import React, {useState} from 'react'
-import Todo from './Todo';
+import React,{useState} from 'react'
 import TodoForm from './TodoForm';
+import Todo from './Todo';
 
 function TodoList() {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useState([])
 
     const addTodo = todo =>{
         if(!todo.text || /^\s*$/.test(todo.text))
-            return;
+            return
 
-        const newTodos= [todo, ...todos];
+            const newTodos =[todo, ...todos]
+            setTodos(newTodos)
+            console.log(newTodos)
+    }
 
-        setTodos(newTodos)
-        console.log(newTodos)
+    const editTodo = (todoId, newValue) =>{
+        let updateTodo = prev => prev.map(item => item.id === todoId ? newValue : item)
+
+        setTodos(updateTodo)
+    }
+
+    const removeTodo = id =>{
+        let RemoveArr = [...todos].filter(todo => todo.id !== id)
+
+        setTodos(RemoveArr)
     }
 
     const completeTodo = id =>{
-        let updateTodos = todos.map(todo =>{
+        let update = todos.map(todo =>{
             if(todo.id === id){
-                todo.isComplete = !todo.isComplete;
+                todo.isComplete = !todo.isComplete
             }
+
         })
-        setTodos(updateTodos)
+
+        setTodos(update)
     }
+
 
     return (
         <div>
-            <h2>What's the plan today</h2>
             <TodoForm onSubmit={addTodo}/>
-            <Todo todos={todos} completeTodo={completeTodo}></Todo>
+            <Todo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} editTodo={editTodo}/>
         </div>
     )
 }
 
 export default TodoList
+    
