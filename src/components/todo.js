@@ -9,8 +9,8 @@ function Todo({todos, receivedTodo, removeTodo, editTodo}){
         value:''
     })
 
-    const submitTodo = edit =>{
-        editTodo(edit.id, edit.value)
+    const submitTodo = value =>{
+        editTodo(edit.id, value)
         setEdit({
             id:null,
             value:''
